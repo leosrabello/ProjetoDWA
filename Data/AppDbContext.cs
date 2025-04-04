@@ -12,7 +12,7 @@ namespace marmitariaLeozitos.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Marmita>()
-                .Property(m => m.valor)
+                .Property(m => m.Valor)
                 .HasPrecision(10, 2);
 
             base.OnModelCreating(modelBuilder);
