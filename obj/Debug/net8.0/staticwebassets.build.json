@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "drilyHn0HjZEDO6MtQF6ihmMINtwvkoG7dVdJM7avJw=",
+  "Hash": "YgBE2Gu5BeA2vN3WvYAp8dYT74gN9kwLrLtUV7mmImc=",
   "Source": "marmitariaLeozitos",
   "BasePath": "_content/marmitariaLeozitos",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

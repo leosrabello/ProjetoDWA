@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("marmitariaLeozitos")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d55d50468c99e6f826535d65c08a42826bac7435")]
 [assembly: System.Reflection.AssemblyProductAttribute("marmitariaLeozitos")]
 [assembly: System.Reflection.AssemblyTitleAttribute("marmitariaLeozitos")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

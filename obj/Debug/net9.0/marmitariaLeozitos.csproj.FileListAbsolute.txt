@@ -41,3 +41,7 @@ C:\Users\gabri\_w\marmitariaLeozitos\obj\Debug\net9.0\refint\marmitariaLeozitos.
 C:\Users\gabri\_w\marmitariaLeozitos\obj\Debug\net9.0\marmitariaLeozitos.pdb
 C:\Users\gabri\_w\marmitariaLeozitos\obj\Debug\net9.0\marmitariaLeozitos.genruntimeconfig.cache
 C:\Users\gabri\_w\marmitariaLeozitos\obj\Debug\net9.0\ref\marmitariaLeozitos.dll
+C:\Users\gabri\_w\marmitariaLeozitos\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\gabri\_w\marmitariaLeozitos\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\gabri\_w\marmitariaLeozitos\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\gabri\_w\marmitariaLeozitos\obj\Debug\net9.0\marmitariaLeozitos.sourcelink.json

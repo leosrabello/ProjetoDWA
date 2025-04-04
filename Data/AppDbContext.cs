@@ -8,6 +8,8 @@ namespace marmitariaLeozitos.Data
         public AppDbContext(DbContextOptions options) : base(options) {}
 
         public DbSet<Marmita> Marmita { get; set; }
+        public DbSet<Pedido> Pedido {get; set;}
+        public DbSet<Usuario> Usuario {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
