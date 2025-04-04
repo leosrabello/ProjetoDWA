@@ -29,6 +29,5 @@ namespace marmitariaLeozitos.Controllers
             return StatusCode(201, marmita);
         }
 
-
      }
 }
