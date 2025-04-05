@@ -1,0 +1,65 @@
+## Build results
+bin/
+obj/
+out/
+
+## User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+## Rider files
+.idea/
+
+## VS Code files
+.vscode/
+
+## Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+## ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+## .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Entity Framework
+Migrations/
+
+## Dotnet-specific
+*.dbmdl
+*.pdb
+*.cache
+*.log
+
+## Visual Studio
+*.vspscc
+*.vssscc
+.vs/
+*.ncb
+*.sdf
+*.cachefile
+*.bak
+*.orig
+
+## Database files
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+## Logs
+*.log
+
+## Environment and settings
+.env
+.env.*
+
+## Publish output
+wwwroot/
+dist/
+node_modules/
