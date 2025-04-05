@@ -11,8 +11,8 @@ using marmitariaLeozitos.Data;
 namespace marmitariaLeozitos.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250404232329_CriacaoClasses")]
-    partial class CriacaoClasses
+    [Migration("20250405154350_PedidoMarmita")]
+    partial class PedidoMarmita
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,19 +49,32 @@ namespace marmitariaLeozitos.Migrations
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("MarmitaId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MarmitaId");
-
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("Pedido");
+                });
+
+            modelBuilder.Entity("marmitariaLeozitos.Models.PedidoMarmita", b =>
+                {
+                    b.Property<int>("PedidoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MarmitaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.HasKey("PedidoId", "MarmitaId");
+
+                    b.HasIndex("MarmitaId");
+
+                    b.ToTable("PedidoMarmita");
                 });
 
             modelBuilder.Entity("marmitariaLeozitos.Models.Usuario", b =>
@@ -74,6 +87,10 @@ namespace marmitariaLeozitos.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("senha")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.HasKey("Id");
 
                     b.ToTable("Usuario");
@@ -81,21 +98,37 @@ namespace marmitariaLeozitos.Migrations
 
             modelBuilder.Entity("marmitariaLeozitos.Models.Pedido", b =>
                 {
-                    b.HasOne("marmitariaLeozitos.Models.Marmita", "Marmita")
-                        .WithMany()
-                        .HasForeignKey("MarmitaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("marmitariaLeozitos.Models.Usuario", "Usuario")
                         .WithMany("Pedidos")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("marmitariaLeozitos.Models.PedidoMarmita", b =>
+                {
+                    b.HasOne("marmitariaLeozitos.Models.Marmita", "Marmita")
+                        .WithMany()
+                        .HasForeignKey("MarmitaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("marmitariaLeozitos.Models.Pedido", "Pedido")
+                        .WithMany("PedidoMarmita")
+                        .HasForeignKey("PedidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Marmita");
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Pedido");
+                });
+
+            modelBuilder.Entity("marmitariaLeozitos.Models.Pedido", b =>
+                {
+                    b.Navigation("PedidoMarmita");
                 });
 
             modelBuilder.Entity("marmitariaLeozitos.Models.Usuario", b =>
