@@ -116,7 +116,11 @@ namespace marmitariaLeozitos.Controllers
         [HttpGet("buscar-todos-pedidos")]
         public async Task<IActionResult> GetPedidos() 
         {
-            var pedidos = await _appDbContext.Pedido.ToListAsync();
+            var pedidos = await _appDbContext.Pedido
+            .Include(p => p.PedidoMarmita)
+                .ThenInclude(pm => pm.Marmita)
+            .Include(p => p.Usuario)
+            .ToListAsync();
 
             if(pedidos.Count == 0)
             {
@@ -147,7 +151,7 @@ namespace marmitariaLeozitos.Controllers
             _appDbContext.Pedido.Add(pedido);
             await _appDbContext.SaveChangesAsync();
 
-            return Ok(pedido);
+            return StatusCode(201, pedido);
         }
         //PEDIDO - END
 
@@ -162,7 +166,8 @@ namespace marmitariaLeozitos.Controllers
             
             _appDbContext.Usuario.Add(usuario);
             await _appDbContext.SaveChangesAsync();
-            return Ok("Usuario cadastrado com sucesso!");
+            return StatusCode(201, "Usuario cadastrado com sucesso!");
         }
+
     }
 }
