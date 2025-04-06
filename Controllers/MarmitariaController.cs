@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using marmitariaLeozitos.Data;
 using marmitariaLeozitos.Models;
+using marmitariaLeozitos.DTOs;
 
 namespace marmitariaLeozitos.Controllers
 {
@@ -16,6 +17,7 @@ namespace marmitariaLeozitos.Controllers
             _appDbContext = appDbContext;
         }
 
+        //MARMITAS
         [HttpGet("buscar-todas-marmitas")]
         public async Task<IActionResult> GetMarmitas()
         {
@@ -106,6 +108,61 @@ namespace marmitariaLeozitos.Controllers
             await _appDbContext.SaveChangesAsync();
 
             return Ok("Marmita removida com sucesso.");
+        }
+        //MARMITAS - END
+
+        //PEDIDOS
+
+        [HttpGet("buscar-todos-pedidos")]
+        public async Task<IActionResult> GetPedidos() 
+        {
+            var pedidos = await _appDbContext.Pedido.ToListAsync();
+
+            if(pedidos.Count == 0)
+            {
+                return NotFound("Não foi encontrado nenhum pedido.");
+            }
+            return Ok(pedidos);
+        }
+
+        [HttpPost("criar-pedido")]
+        public async Task<IActionResult> CriarPedido(PedidoDTO dto) 
+        {
+            if(dto == null )
+            {
+                return BadRequest("Dados inválidos!");
+            }
+
+            var pedido = new Pedido
+            {
+                UsuarioId = dto.UsuarioId,
+                Data = DateTime.Now,
+                PedidoMarmita = dto.PedidoMarmita.Select(m => new PedidoMarmita
+                {
+                    MarmitaId = m.MarmitaId,
+                    Quantidade = m.Quantidade
+                }).ToList()
+            };
+
+            _appDbContext.Pedido.Add(pedido);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(pedido);
+        }
+        //PEDIDO - END
+
+        //USUARIO
+        [HttpPost("cadastrar-usuario")]
+        public async Task<IActionResult> CadastrarUsuario(Usuario usuario)
+        {
+            if(usuario == null)
+            {
+                return BadRequest("Dados Inválidos!");
+            }
+            
+            _appDbContext.Usuario.Add(usuario);
+            await _appDbContext.SaveChangesAsync();
+            return Ok("Usuario cadastrado com sucesso!");
         }
     }
 }

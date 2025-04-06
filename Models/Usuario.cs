@@ -6,9 +6,9 @@ namespace marmitariaLeozitos.Models
 
         public string nome {get; set;}
 
-        private string senha {get; set;}
-    
-        public List<Pedido> Pedidos {get; set;}
+        public string senha {get; set;}
+
+        public List<Pedido> Pedidos {get; set;} = new();
     }
 
 }
