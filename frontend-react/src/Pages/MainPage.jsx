@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import MarmitaCard from "./Components/MarmitaCard";
+import MarmitaCard from "../Components/MarmitaCard";
 
 function MainPage() {
   return (
