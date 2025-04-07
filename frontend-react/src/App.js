@@ -1,8 +1,8 @@
-import Header from './Components/Header.jsx';
+import Layout from './Components/Layout.jsx';
 
 function App() {
   return (
-    <Header />
+    <Layout />
   );
 }
 
