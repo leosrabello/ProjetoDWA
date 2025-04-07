@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Tilt from 'react-parallax-tilt';
 
 function MarmitaCard() {
   const [marmitas, setMarmitas] = useState([]);
@@ -25,10 +26,16 @@ function MarmitaCard() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
       {marmitas.map((marmita) => (
-        <div key={marmita.id} className="bg-white shadow-lg rounded-lg p-4 flex flex-col items-center text-center">
+        <Tilt  glareEnable={true}
+        glareMaxOpacity={0.2}
+        scale={1.05}
+        transitionSpeed={250}
+        tiltMaxAngleX={10}
+        tiltMaxAngleY={10}
+        key={marmita.id} className="bg-white shadow-lg rounded-lg p-4 flex flex-col items-center text-center hover: transition-shadow">
           <h3 className="text-lg font-bold mb-2">{marmita.descricao}</h3>
           <span className="text-orange-500 font-semibold">R$ {marmita.valor.toFixed(2)}</span>
-        </div>
+        </Tilt>
       ))}
     </div>
   );
