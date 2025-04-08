@@ -6,7 +6,7 @@ function Footer() {
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
         {/* Esquerda - Nome */}
         <div className="text-center md:text-left">
-          <h2 className="text-lg font-bold">Marmitaria Leozitos 🍽️</h2>
+          <h2 className="text-lg font-bold">Marmitaria Leozitos</h2>
           <p className="text-sm text-gray-400">Comida caseira com amor desde 2023</p>
         </div>
 

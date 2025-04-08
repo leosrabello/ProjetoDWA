@@ -4,12 +4,16 @@ import './index.css';
 import App from './App';
 import { ErrorProvider } from './Context/ErrorContext';
 
+//  Importa o provider do carrinho
+import { CartProvider } from './Context/CartContext';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ErrorProvider>
+  <ErrorProvider>
+    <CartProvider>
       <App />
-    </ErrorProvider>
+    </CartProvider>
+  </ErrorProvider>
   </React.StrictMode>
 );
-

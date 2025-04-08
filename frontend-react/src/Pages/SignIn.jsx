@@ -74,7 +74,7 @@ function SignIn() {
           className="w-full max-w-sm flex flex-col"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-4xl font-bold text-center text-orange-500 mb-4">Crie sua conta!</h2>
+          <h2 className="text-4xl font-bold text-center text-red-600 mb-4">Crie sua conta!</h2>
 
           <InputField
             label="Nome:"
@@ -142,7 +142,7 @@ function SignIn() {
           <div className="flex flex-col gap-2 mt-10">
             <button
               type="submit"
-              className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition active:animate-ping-once"
+              className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition active:animate-ping-once"
             >
               Cadastrar
             </button>
