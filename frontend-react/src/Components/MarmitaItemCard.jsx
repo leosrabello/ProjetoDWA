@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useCart } from "../Context/CartContext"; //  importante
+import Tilt from 'react-parallax-tilt';
+
 
 function MarmitaItemCard({ marmita, imagem }) {
   const [quantidade, setQuantidade] = useState(1);
@@ -14,7 +16,12 @@ function MarmitaItemCard({ marmita, imagem }) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 transition w-64">
+    <Tilt   glareEnable={true}
+            glareMaxOpacity={0.2}
+            scale={1.05}
+            transitionSpeed={250}
+            tiltMaxAngleX={10}
+            tiltMaxAngleY={10} className="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 transition w-64">
       <img
         src={imagem}
         alt={marmita.descricao}
@@ -37,7 +44,7 @@ function MarmitaItemCard({ marmita, imagem }) {
           Adicionar ao carrinho
         </button>
       </div>
-    </div>
+    </Tilt>
   );
 }
 
