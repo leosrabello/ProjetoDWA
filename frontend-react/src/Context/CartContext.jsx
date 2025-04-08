@@ -23,8 +23,22 @@ export function CartProvider({ children }) {
     });
   };
 
+  const removeFromCart = (id) => {
+    setCartItems((prev) => prev.filter(item => item.id !== id));
+  };
+  
+  const decreaseQuantity = (id) => {
+    setCartItems((prev) =>
+      prev.map(item =>
+        item.id === id
+          ? { ...item, quantidade: item.quantidade - 1 }
+          : item
+      ).filter(item => item.quantidade > 0)
+    );
+  };
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, decreaseQuantity }}>
       {children}
     </CartContext.Provider>
   );

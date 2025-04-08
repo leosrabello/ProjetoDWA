@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { useCart } from "../Context/CartContext"; // 👈 importante
+import { useCart } from "../Context/CartContext"; //  importante
 
 function MarmitaItemCard({ marmita, imagem }) {
   const [quantidade, setQuantidade] = useState(1);
-  const { addToCart } = useCart(); // 👈 pega a função do contexto
+  const { addToCart } = useCart(); // pega a função do contexto
 
   const aumentar = () => setQuantidade((q) => q + 1);
   const diminuir = () => setQuantidade((q) => Math.max(1, q - 1));
 
   const handleAdd = () => {
-    addToCart(marmita, quantidade); // 👈 adiciona ao carrinho
+    addToCart(marmita, quantidade); // adiciona ao carrinho
     setQuantidade(1); // opcional: reseta
   };
 

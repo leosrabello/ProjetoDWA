@@ -6,9 +6,14 @@ import {
   UserIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline';
+import { useCart } from '../Context/CartContext'; // 👈 Importa o contexto
 
 function Header() {
   const [isCartOpen, setCartOpen] = useState(false);
+  const { cartItems } = useCart(); // 👈 Acessa os itens do carrinho
+
+  // Calcula total
+  const total = cartItems.reduce((sum, item) => sum + item.valor * item.quantidade, 0);
 
   return (
     <>
@@ -57,13 +62,35 @@ function Header() {
           </button>
         </div>
 
-        {/* Conteúdo do carrinho (mock) */}
         <div className="p-4">
-          <p className="text-gray-600 mb-2">Você ainda não adicionou itens.</p>
+          {cartItems.length === 0 ? (
+            <p className="text-gray-600 mb-2">Você ainda não adicionou itens.</p>
+          ) : (
+            <>
+              <ul className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+                {cartItems.map((item) => (
+                  <li key={item.id} className="flex justify-between items-center border-b pb-2">
+                    <div>
+                      <p className="font-medium">{item.descricao}</p>
+                      <p className="text-sm text-gray-500">Qtd: {item.quantidade}</p>
+                    </div>
+                    <span className="text-red-600 font-semibold">
+                      R$ {(item.valor * item.quantidade).toFixed(2)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Total */}
+              <div className="mt-6 border-t pt-4 text-right">
+                <p className="text-lg font-bold">Total: R$ {total.toFixed(2)}</p>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
-      {/* Fundo escuro ao abrir o carrinho */}
+      {/* Fundo escurecido */}
       {isCartOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-30 z-40"
