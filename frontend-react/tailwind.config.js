@@ -14,11 +14,15 @@ module.exports = {
       },
       animation: {
         'bounce-soft': 'bounce-soft 1s infinite',
+        'ping-once': 'ping-once 1s cubic-bezier(0, 0, 0.2, 1) forwards',
       },
       keyframes: {
         'bounce-soft': {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-4px)' }, // menos agressivo
+        },
+        'ping-once': {
+          '75%, 100%': { transform: 'scale(2)', opacity: '0' },
         },
       },
     },

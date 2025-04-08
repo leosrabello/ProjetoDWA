@@ -44,12 +44,13 @@ function Login() {
             >
               Entrar
             </button>
-            <button
-              type="button"
-              className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition"
+            <a
+              href="/cadastro"
+              className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition text-center"
             >
               Cadastrar
-            </button>
+            </a>
+
           </div>
         </form>
       </div>

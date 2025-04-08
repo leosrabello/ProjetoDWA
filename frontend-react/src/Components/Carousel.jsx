@@ -16,7 +16,7 @@ function Carousel() {
     <div className="w-full h-full">
       <Swiper
         modules={[Autoplay]}
-        autoplay={{ delay: 3000 }}
+        autoplay={{ delay: 5000 }}
         loop={true}
         slidesPerView={1}
         className="w-full h-full"

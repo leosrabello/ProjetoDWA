@@ -163,10 +163,19 @@ namespace marmitariaLeozitos.Controllers
             {
                 return BadRequest("Dados Inválidos!");
             }
+            var usuarios = await _appDbContext.Usuario.ToListAsync();
+
+            foreach (var user in usuarios)
+            {
+                if(user.email == usuario.email)
+                {
+                    return BadRequest("Email já está em uso.");
+                }
+            }
             
             _appDbContext.Usuario.Add(usuario);
             await _appDbContext.SaveChangesAsync();
-            return StatusCode(201, "Usuario cadastrado com sucesso!");
+            return StatusCode(201, usuario);
         }
 
     }

@@ -11,6 +11,7 @@ namespace marmitariaLeozitos.Data
         public DbSet<Pedido> Pedido {get; set;}
         public DbSet<Usuario> Usuario {get; set;}
         public DbSet<PedidoMarmita> PedidoMarmita {get; set;}
+        public DbSet<Logradouro> Logradouro {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
