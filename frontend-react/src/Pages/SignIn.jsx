@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import Carousel from '../Components/Carousel';
 import InputField from '../Components/InputField';
+import ErrorMessage from '../Components/ErrorMessage';
 import axios from 'axios';
+import { useError } from '../Context/ErrorContext';
 
 function SignIn() {
+  const { showError, errorMsg, clearError } = useError();
   // const [rua, setRua] = useState("");
+
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -26,15 +30,15 @@ function SignIn() {
   
     if(usuarioData.nome == '' || usuarioData.email == '' || usuarioData.senha == '') 
       {
-        alert("Um ou mais campos se encontra vazio.");
+        showError("Um ou mais campos se encontra vazio.");
         return;
       }
     if(usuarioData.senha.length < 5) {
-      alert("A senha tem que ter no mínimo 5 caractéres.");
+      showError("A senha tem que ter no mínimo 5 caractéres.");
       return;
     }
     if(usuarioData.senha != formData.csenha) {
-      alert("As senhas não coincidem. Por favor, verifique os campos de senha e confirmação.")
+      showError("As senhas não coincidem. Por favor, verifique os campos de senha e confirmação.")
       return;
     }
 
@@ -47,15 +51,20 @@ function SignIn() {
         senha: '',
         csenha: ''
       });
-      
+
     } catch (error) {
-      console.error("Erro ao cadastrar usuário:", error.response?.data || error.message);
+      showError("Erro ao cadastrar usuário: " + error.response?.data || error.message);
     }
   };
   
 
   return (
     <div className='min-h-screen flex justify-end bg-orange-500'>
+
+    {errorMsg && (
+          <ErrorMessage msg={errorMsg} onClose={clearError} />
+        )}
+
       <div className="w-2/3 flex items-center justify-center bg-orange-500">
         <Carousel />
       </div>
