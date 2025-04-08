@@ -14,7 +14,14 @@ function Login() {
           className="w-full max-w-sm flex flex-col"
           onSubmit={(e) => e.preventDefault()}
         >
-          <h2 className="text-4xl font-bold text-center text-orange-500 mb-4">Seja bem vindo! 🍽️</h2>  
+         <div className="flex items-center gap-3 mb-4">
+         <img
+           src="/leozitos marmitaria.png"
+           alt="Logo"
+           className="h-50 w-auto object-contain mb-6"
+          />
+         </div>
+          <h2 className="text-4xl font-bold text-center text-black-500 mb-4">Seja bem vindo!</h2>  
 
           <div className="flex flex-col mb-4">
             <label htmlFor="nome" className="mb-1 font-medium text-gray-700">Nome:</label>
@@ -40,17 +47,16 @@ function Login() {
           <div className="flex flex-col gap-2 mt-10">
             <button
               type="submit"
-              className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition"
+              className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition"
             >
               Entrar
             </button>
             <a
               href="/cadastro"
-              className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition text-center"
+              className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition text-center"
             >
               Cadastrar
             </a>
-
           </div>
         </form>
       </div>
