@@ -5,11 +5,13 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors:{
+      colors: {
         marmitaLight: "#ECE4E3",
         //criar as cores aqui leo
       },
-
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'],
+      },
       animation: {
         'bounce-soft': 'bounce-soft 1s infinite',
       },
