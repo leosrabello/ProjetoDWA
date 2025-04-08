@@ -10,15 +10,13 @@ import { useCart } from '../Context/CartContext'; // 👈 Importa o contexto
 
 function Header() {
   const [isCartOpen, setCartOpen] = useState(false);
-  const { cartItems } = useCart(); // 👈 Acessa os itens do carrinho
+  const { cartItems, decreaseQuantity, removeFromCart } = useCart(); // 🆕 pega ações
 
-  // Calcula total
   const total = cartItems.reduce((sum, item) => sum + item.valor * item.quantidade, 0);
 
   return (
     <>
       <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-md py-4 px-6 flex justify-between items-center font-sans">
-        {/* Logo e título */}
         <div className="flex items-center gap-3">
           <img
             src="/leozitos marmitaria.png"
@@ -28,7 +26,6 @@ function Header() {
           <h1 className="text-black text-xl font-bold">Marmitaria Leozitos</h1>
         </div>
 
-        {/* Menu central */}
         <nav className="hidden md:flex gap-6 text-black font-medium">
           <a href="#" className="hover:text-red-500 transition">Marmitas</a>
           <a href="#" className="hover:text-red-500 transition">Mais categorias</a>
@@ -36,7 +33,6 @@ function Header() {
           <a href="#" className="hover:text-red-500 transition">Sobre nós</a>
         </nav>
 
-        {/* Ícones do lado direito */}
         <div className="flex items-center gap-4">
           <MagnifyingGlassIcon className="h-5 w-5 text-gray-700 cursor-pointer" />
           <MapPinIcon className="h-5 w-5 text-gray-700 cursor-pointer" />
@@ -53,7 +49,7 @@ function Header() {
         </div>
       </header>
 
-      {/* Painel do carrinho */}
+      {/* Painel lateral do carrinho */}
       <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="p-4 flex justify-between items-center border-b">
           <h2 className="text-xl font-bold">Seu carrinho</h2>
@@ -69,12 +65,26 @@ function Header() {
             <>
               <ul className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
                 {cartItems.map((item) => (
-                  <li key={item.id} className="flex justify-between items-center border-b pb-2">
+                  <li key={item.id} className="flex justify-between items-start border-b pb-2">
                     <div>
                       <p className="font-medium">{item.descricao}</p>
                       <p className="text-sm text-gray-500">Qtd: {item.quantidade}</p>
+                      <div className="flex gap-2 mt-2">
+                        <button
+                          onClick={() => decreaseQuantity(item.id)}
+                          className="text-sm bg-gray-200 px-2 py-1 rounded hover:bg-gray-300"
+                        >
+                          –
+                        </button>
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className="text-sm bg-red-200 px-2 py-1 rounded hover:bg-red-300 text-red-800"
+                        >
+                          Remover
+                        </button>
+                      </div>
                     </div>
-                    <span className="text-red-600 font-semibold">
+                    <span className="text-red-600 font-semibold whitespace-nowrap mt-1">
                       R$ {(item.valor * item.quantidade).toFixed(2)}
                     </span>
                   </li>
