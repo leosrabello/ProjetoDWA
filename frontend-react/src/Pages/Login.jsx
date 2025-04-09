@@ -30,7 +30,8 @@ function Login() {
 
       if(response.data.success) {
         navigate('/home');
-        localStorage.setItem("userEmail", response.data.email)
+        localStorage.setItem("userEmail", response.data.email);
+        localStorage.setItem("logado", true);
       }
       setFormData({
         email: '',
