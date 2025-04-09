@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using marmitariaLeozitos.Data;
 using marmitariaLeozitos.Models;
 using marmitariaLeozitos.DTOs;
+using System.Text.Json;
 
 namespace marmitariaLeozitos.Controllers
 {
@@ -176,6 +177,31 @@ namespace marmitariaLeozitos.Controllers
             _appDbContext.Usuario.Add(usuario);
             await _appDbContext.SaveChangesAsync();
             return StatusCode(201, usuario);
+        }
+
+        [HttpPost("validar-login")]
+        public async Task<IActionResult> CadastrarUsuario([FromBody] JsonElement dados)
+        {
+
+            string email = dados.GetProperty("email").GetString();
+            string senha = dados.GetProperty("senha").GetString();
+
+            if(senha == null || email == null)
+            {
+                return BadRequest("Dados Inválidos!");
+            }
+
+            var usuarios = await _appDbContext.Usuario.ToListAsync();
+
+            foreach (var user in usuarios)
+            {
+               if(user.senha == senha && user.email == email)
+               {
+                    return Ok(new{success = true, message = "Usuário logado com sucesso!", email = user.email});
+               }
+            }
+            
+            return BadRequest("E-mail ou senha incorretos. Tente novamente.");
         }
 
     }

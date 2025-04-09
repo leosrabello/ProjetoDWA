@@ -28,8 +28,7 @@ function SignIn() {
       pedidos: [] 
     };
   
-    if(usuarioData.nome == '' || usuarioData.email == '' || usuarioData.senha == '') 
-      {
+    if(usuarioData.nome == '' || usuarioData.email == '' || usuarioData.senha == '') {
         showError("Um ou mais campos se encontra vazio.");
         return;
       }
