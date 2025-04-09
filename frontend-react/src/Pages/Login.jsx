@@ -1,14 +1,17 @@
 import React from 'react';
 import Carousel from '../Components/Carousel';
 import axios from 'axios';
-import { useError } from '../Context/ErrorContext';
 import InputField from '../Components/InputField';
-import { useState } from 'react';
 import ErrorMessage from '../Components/ErrorMessage';
+import Message from '../Components/Message';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useError } from '../Context/ErrorContext';
+import { useMessage } from '../Context/MessageContext';
 
 function Login() {
   const { showError, errorMsg, clearError } = useError();
+  const { showMessage, message, clearMessage } = useMessage();
   const navigate = useNavigate();
   // const [rua, setRua] = useState("");
 
@@ -48,6 +51,9 @@ function Login() {
       {errorMsg && (
           <ErrorMessage msg={errorMsg} onClose={clearError} />
         )}
+      {message && (
+        <Message msg={message} onClose={clearMessage} />
+      )}
 
         <div className="w-2/3 flex items-center justify-center bg-orange-500">
         {/* Aqui você pode colocar o componente de carrossel ou imagens estáticas por enquanto */}
