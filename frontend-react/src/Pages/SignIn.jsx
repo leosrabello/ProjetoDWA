@@ -4,9 +4,13 @@ import InputField from '../Components/InputField';
 import ErrorMessage from '../Components/ErrorMessage';
 import axios from 'axios';
 import { useError } from '../Context/ErrorContext';
+import { useNavigate } from 'react-router-dom';
+
 
 function SignIn() {
   const { showError, errorMsg, clearError } = useError();
+
+  const navigate = useNavigate();
   // const [rua, setRua] = useState("");
 
   const [formData, setFormData] = useState({
@@ -25,6 +29,7 @@ function SignIn() {
       senha: formData.senha,
       logradouroId: null,
       logradouro: null,
+      tipo: 0,
       pedidos: [] 
     };
   
@@ -51,6 +56,7 @@ function SignIn() {
         csenha: ''
       });
 
+      navigate('/home');
     } catch (error) {
       showError("Erro ao cadastrar usuário: " + error.response?.data || error.message);
     }
@@ -60,9 +66,7 @@ function SignIn() {
   return (
     <div className='min-h-screen flex justify-end bg-orange-500'>
 
-    {errorMsg && (
-          <ErrorMessage msg={errorMsg} onClose={clearError} />
-        )}
+    {errorMsg && (<ErrorMessage msg={errorMsg} onClose={clearError} />)}
 
       <div className="w-2/3 flex items-center justify-center bg-orange-500">
         <Carousel />

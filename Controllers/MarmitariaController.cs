@@ -4,6 +4,7 @@ using marmitariaLeozitos.Data;
 using marmitariaLeozitos.Models;
 using marmitariaLeozitos.DTOs;
 using System.Text.Json;
+using Microsoft.AspNetCore.Hosting;
 
 namespace marmitariaLeozitos.Controllers
 {
@@ -12,10 +13,12 @@ namespace marmitariaLeozitos.Controllers
     public class MarmitariaController : ControllerBase 
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IWebHostEnvironment _environment;
 
-        public MarmitariaController(AppDbContext appDbContext)
+        public MarmitariaController(AppDbContext appDbContext, IWebHostEnvironment environment)
         {
             _appDbContext = appDbContext;
+            _environment = environment;
         }
 
         //MARMITAS
@@ -38,18 +41,45 @@ namespace marmitariaLeozitos.Controllers
         }
 
         [HttpPost("criar-marmita")]
-        public async Task<IActionResult> AddMarmita(Marmita marmita)
+        public async Task<IActionResult> AddMarmita([FromForm] string descricao, [FromForm] decimal valor, [FromForm] IFormFile imagem)
         {
-            if (marmita == null) 
+            if (string.IsNullOrEmpty(descricao) || imagem == null || valor <= 0)
+                return BadRequest("Preencha todos os campos corretamente.");
+
+            // Define pasta de destino
+            var pastaDestino = Path.Combine(_environment.WebRootPath, "imagens");
+
+            if (!Directory.Exists(pastaDestino))
             {
-                return BadRequest("Dados inválidos.");
+                Directory.CreateDirectory(pastaDestino); 
             }
 
-            _appDbContext.Marmita.Add(marmita);
+            var nomeArquivo = Guid.NewGuid().ToString() + Path.GetExtension(imagem.FileName);
+            var caminhoCompleto = Path.Combine(pastaDestino, nomeArquivo);
+
+            // Salva imagem fisicamente
+            using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+            {
+                await imagem.CopyToAsync(stream);
+            }
+
+            // Gera a URL pública (ex: http://localhost:5294/imagens/foto.png)
+            var urlImagem = $"{Request.Scheme}://{Request.Host}/imagens/{nomeArquivo}";
+
+            // Cria marmita
+            var novaMarmita = new Marmita
+            {
+                Descricao = descricao,
+                Valor = valor,
+                Imagem = urlImagem // aqui você salva só a URL
+            };
+
+            _appDbContext.Marmita.Add(novaMarmita);
             await _appDbContext.SaveChangesAsync();
 
-            return StatusCode(201, marmita);
+            return StatusCode(201, novaMarmita);
         }
+
 
         [HttpPut("alterar-marmita/{id}")]
         public async Task<IActionResult> UpdateMarmita(int id, Marmita marmita)
@@ -179,34 +209,34 @@ namespace marmitariaLeozitos.Controllers
             return StatusCode(201, usuario);
         }
 
-[HttpPost("validar-login")]
-public async Task<IActionResult> CadastrarUsuario([FromBody] JsonElement dados)
-{
-    string email = dados.GetProperty("email").GetString();
-    string senha = dados.GetProperty("senha").GetString();
-
-    if(senha == null || email == null)
-    {
-        return BadRequest("Dados Inválidos!");
-    }
-
-    var usuarios = await _appDbContext.Usuario.ToListAsync();
-
-    foreach (var user in usuarios)
-    {
-        if(user.senha == senha && user.email == email)
+        [HttpPost("validar-login")]
+        public async Task<IActionResult> CadastrarUsuario([FromBody] JsonElement dados)
         {
-            return Ok(new{
-                success = true,
-                message = "Usuário logado com sucesso!",
-                email = user.email,
-                tipo = user.tipo 
-            });
-        }
-    }
+            string email = dados.GetProperty("email").GetString();
+            string senha = dados.GetProperty("senha").GetString();
 
-    return BadRequest("E-mail ou senha incorretos. Tente novamente.");
-}
+            if(senha == null || email == null)
+            {
+                return BadRequest("Dados Inválidos!");
+            }
+
+            var usuarios = await _appDbContext.Usuario.ToListAsync();
+
+            foreach (var user in usuarios)
+            {
+                if(user.senha == senha && user.email == email)
+                {
+                    return Ok(new{
+                        success = true,
+                        message = "Usuário logado com sucesso!",
+                        email = user.email,
+                        tipo = user.tipo 
+                    });
+                }
+            }
+
+            return BadRequest("E-mail ou senha incorretos. Tente novamente.");
+        }
 
 
     }

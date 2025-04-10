@@ -37,7 +37,6 @@ function MarmitaCard() {
         <MarmitaItemCard
           key={marmita.id}
           marmita={marmita}
-          imagem={imagens[marmita.descricao] || frangoGrelhado}
         />
       ))}
     </div>

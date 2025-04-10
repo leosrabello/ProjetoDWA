@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
+import Message from '../Components/Message';
+import ErrorMessage from '../Components/ErrorMessage';
+import { useError } from '../Context/ErrorContext';
+import { useMessage } from '../Context/MessageContext';
 
 function CadastrarMarmita() {
   const [form, setForm] = useState({ descricao: '', valor: '' });
@@ -7,8 +11,8 @@ function CadastrarMarmita() {
   const [preview, setPreview] = useState(null);
 
   const [loading, setLoading] = useState(false);
-  const [successMsg, setSuccessMsg] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const { showError, errorMsg, clearError } = useError();
+  const { showMessage, message, clearMessage } = useMessage();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -22,8 +26,7 @@ function CadastrarMarmita() {
     e.preventDefault();
 
     if (!form.descricao || !form.valor || !imagem) {
-      setErrorMsg('Preencha todos os campos e selecione uma imagem!');
-      setSuccessMsg('');
+      showError('Preencha todos os campos e selecione uma imagem!');
       return;
     }
 
@@ -40,14 +43,12 @@ function CadastrarMarmita() {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
-      setSuccessMsg('✅ Marmita cadastrada com sucesso!');
-      setErrorMsg('');
+      showMessage('Marmita cadastrada com sucesso!');
       setForm({ descricao: '', valor: '' });
       setImagem(null);
       setPreview(null);
-    } catch (err) {
-      setErrorMsg('❌ Erro ao cadastrar marmita.');
-      setSuccessMsg('');
+    } catch (error) {
+      showError('Erro ao cadastrar marmita: ' + error.response?.data || error.mess);
     } finally {
       setLoading(false);
     }
@@ -58,8 +59,8 @@ function CadastrarMarmita() {
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
         <h1 className="text-2xl font-bold mb-6 text-center text-red-600">Cadastro de Marmitas</h1>
 
-        {successMsg && <p className="text-green-600 mb-4 animate-pulse">{successMsg}</p>}
-        {errorMsg && <p className="text-red-600 mb-4 animate-pulse">{errorMsg}</p>}
+        {message && <Message msg = {message} onClose={clearMessage}/>}
+        {errorMsg && <ErrorMessage msg={errorMsg} onClose={clearError}/>}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>

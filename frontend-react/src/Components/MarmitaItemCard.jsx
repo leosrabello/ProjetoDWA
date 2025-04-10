@@ -3,7 +3,7 @@ import { useCart } from "../Context/CartContext"; //  importante
 import Tilt from 'react-parallax-tilt';
 
 
-function MarmitaItemCard({ marmita, imagem }) {
+function MarmitaItemCard({ marmita}) {
   const [quantidade, setQuantidade] = useState(1);
   const { addToCart } = useCart(); // pega a função do contexto
 
@@ -23,7 +23,7 @@ function MarmitaItemCard({ marmita, imagem }) {
             tiltMaxAngleX={10}
             tiltMaxAngleY={10} className="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 transition w-64">
       <img
-        src={imagem}
+        src={marmita.imagem}
         alt={marmita.descricao}
         className="h-36 w-full object-cover"
       />

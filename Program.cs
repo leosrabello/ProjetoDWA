@@ -4,6 +4,8 @@ using marmitariaLeozitos.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseWebRoot("wwwroot");
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
@@ -63,5 +65,8 @@ app.UseCors("AllowAll");
 
 app.UseAuthorization();
 app.MapControllers();
+
+app.UseStaticFiles(); 
+
 
 app.Run();
