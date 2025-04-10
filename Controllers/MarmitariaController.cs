@@ -200,7 +200,7 @@ public async Task<IActionResult> CadastrarUsuario([FromBody] JsonElement dados)
                 success = true,
                 message = "Usuário logado com sucesso!",
                 email = user.email,
-                tipo = user.tipo // ← campo novo retornado!
+                tipo = user.tipo 
             });
         }
     }

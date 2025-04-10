@@ -1,42 +1,46 @@
-## Build results
+# Build results
 bin/
 obj/
 out/
 
-## User-specific files
+# Publish output
+wwwroot/
+dist/
+
+# User-specific files
 *.user
 *.userosscache
 *.suo
 *.sln.docstates
 
-## Rider files
+# Rider files
 .idea/
 
-## VS Code files
+# VS Code files
 .vscode/
 
-## Windows image file caches
+# Windows image file caches
 Thumbs.db
 ehthumbs.db
 
-## ASP.NET Scaffolding
+# ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
-## .NET Core
+# .NET Core
 project.lock.json
 project.fragment.lock.json
 artifacts/
 
-## Entity Framework
+# Entity Framework
 Migrations/
 
-## Dotnet-specific
+# Dotnet-specific
 *.dbmdl
 *.pdb
 *.cache
 *.log
 
-## Visual Studio
+# Visual Studio
 *.vspscc
 *.vssscc
 .vs/
@@ -46,20 +50,26 @@ Migrations/
 *.bak
 *.orig
 
-## Database files
+# Logs
+*.log
+
+# Environment and settings
+.env
+.env.*
+.env.*.local
+*.local
+
+# Database files
 *.mdf
 *.ldf
 *.sqlite
 *.db
 
-## Logs
-*.log
-
-## Environment and settings
-.env
-.env.*
-
-## Publish output
-wwwroot/
-dist/
+# Node.js
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# React Build
+build/
