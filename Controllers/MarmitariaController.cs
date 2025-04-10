@@ -179,30 +179,35 @@ namespace marmitariaLeozitos.Controllers
             return StatusCode(201, usuario);
         }
 
-        [HttpPost("validar-login")]
-        public async Task<IActionResult> CadastrarUsuario([FromBody] JsonElement dados)
+[HttpPost("validar-login")]
+public async Task<IActionResult> CadastrarUsuario([FromBody] JsonElement dados)
+{
+    string email = dados.GetProperty("email").GetString();
+    string senha = dados.GetProperty("senha").GetString();
+
+    if(senha == null || email == null)
+    {
+        return BadRequest("Dados Inválidos!");
+    }
+
+    var usuarios = await _appDbContext.Usuario.ToListAsync();
+
+    foreach (var user in usuarios)
+    {
+        if(user.senha == senha && user.email == email)
         {
-
-            string email = dados.GetProperty("email").GetString();
-            string senha = dados.GetProperty("senha").GetString();
-
-            if(senha == null || email == null)
-            {
-                return BadRequest("Dados Inválidos!");
-            }
-
-            var usuarios = await _appDbContext.Usuario.ToListAsync();
-
-            foreach (var user in usuarios)
-            {
-               if(user.senha == senha && user.email == email)
-               {
-                    return Ok(new{success = true, message = "Usuário logado com sucesso!", email = user.email});
-               }
-            }
-            
-            return BadRequest("E-mail ou senha incorretos. Tente novamente.");
+            return Ok(new{
+                success = true,
+                message = "Usuário logado com sucesso!",
+                email = user.email,
+                tipo = user.tipo // ← campo novo retornado!
+            });
         }
+    }
+
+    return BadRequest("E-mail ou senha incorretos. Tente novamente.");
+}
+
 
     }
 }

@@ -14,6 +14,8 @@ namespace marmitariaLeozitos.Models
 
         public string email {get; set;}
 
+        public string tipo { get; set; }
+
         public List<Pedido> Pedidos {get; set;} = new();
     }
 
