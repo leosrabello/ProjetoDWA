@@ -1,25 +1,34 @@
-import React from 'react'
+import React from 'react';
 
 function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-6 mt-8">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-        {/* Esquerda - Nome */}
-        <div className="text-center md:text-left">
-          <h2 className="text-lg font-bold">Marmitaria Leozitos</h2>
-          <p className="text-sm text-gray-400">Comida caseira com amor desde 2023</p>
+    <footer style={{ backgroundColor: '#F6F3EA' }} className="text-gray-800 py-6 mt-8">
+      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-center items-center gap-12 text-center md:text-left">
+        {/* Logo + Nome */}
+        <div className="flex items-center gap-3">
+          <img
+            src="/leozitos marmitaria.png"
+            alt="Logo"
+            className="h-14 w-auto object-contain"
+          />
+          <div>
+            <h2 className="text-lg font-bold">Marmitaria Leozitos</h2>
+            <p className="text-sm text-gray-600">Comida caseira com amor desde 2023</p>
+          </div>
         </div>
 
+        {/* Links */}
         <ul className="flex gap-6 text-sm">
-          <li><a href="#" className="hover:text-orange-400 transition">Sobre</a></li>
-          <li><a href="#" className="hover:text-orange-400 transition">Contato</a></li>
-          <li><a href="#" className="hover:text-orange-400 transition">Ajuda</a></li>
+          <li><a href="#" className="hover:text-red-500 transition">Sobre</a></li>
+          <li><a href="#" className="hover:text-red-500 transition">Contato</a></li>
+          <li><a href="#" className="hover:text-red-500 transition">Ajuda</a></li>
         </ul>
 
+        {/* Redes sociais */}
         <div className="flex gap-4">
-          <a href="#"><img src="/facebook.svg" alt="Facebook" className="h-5 w-5" /></a>
-          <a href="#"><img src="/instagram.svg" alt="Instagram" className="h-5 w-5" /></a>
-          <a href="#"><img src="/whatsapp.svg" alt="WhatsApp" className="h-5 w-5" /></a>
+          <a href="#"><img src="/facebook.svg" alt="Facebook" className="h-6 w-6" /></a>
+          <a href="#"><img src="/instagram.svg" alt="Instagram" className="h-6 w-6" /></a>
+          <a href="#"><img src="/whatsapp.svg" alt="WhatsApp" className="h-6 w-6" /></a>
         </div>
       </div>
 
@@ -30,4 +39,4 @@ function Footer() {
   );
 }
 
-export default Footer
+export default Footer;

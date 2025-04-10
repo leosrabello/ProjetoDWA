@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        marmitaLight: "#ECE4E3",
+        'leozitosbg': '#F6F3EA',
         //criar as cores aqui leo
       },
       fontFamily: {

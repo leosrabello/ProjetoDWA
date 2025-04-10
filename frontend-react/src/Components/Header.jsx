@@ -6,11 +6,11 @@ import {
   UserIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline';
-import { useCart } from '../Context/CartContext'; // 👈 Importa o contexto
+import { useCart } from '../Context/CartContext'; // importa o contexto
 
 function Header() {
   const [isCartOpen, setCartOpen] = useState(false);
-  const { cartItems, decreaseQuantity, removeFromCart } = useCart(); // 🆕 pega ações
+  const { cartItems, decreaseQuantity, removeFromCart } = useCart(); // pega ações
 
   const total = cartItems.reduce((sum, item) => sum + item.valor * item.quantidade, 0);
 
@@ -23,15 +23,15 @@ function Header() {
             alt="Logo"
             className="h-16 w-auto object-contain"
           />
-          <h1 className="text-black text-xl font-bold">Marmitaria Leozitos</h1>
         </div>
 
-        <nav className="hidden md:flex gap-6 text-black font-medium">
-          <a href="#" className="hover:text-red-500 transition">Marmitas</a>
-          <a href="#" className="hover:text-red-500 transition">Mais categorias</a>
-          <a href="#" className="hover:text-red-500 transition">Objetivos</a>
-          <a href="#" className="hover:text-red-500 transition">Sobre nós</a>
-        </nav>
+  {/* Menu central */}
+  <nav className="hidden md:flex gap-8 text-black font-medium absolute left-1/2 transform -translate-x-1/2">
+    <a href="#" className="hover:text-red-500 transition">Marmitas</a>
+    <a href="#" className="hover:text-red-500 transition">Mais categorias</a>
+    <a href="#" className="hover:text-red-500 transition">Objetivos</a>
+    <a href="#" className="hover:text-red-500 transition">Sobre nós</a>
+  </nav>
 
         <div className="flex items-center gap-4">
           <MagnifyingGlassIcon className="h-5 w-5 text-gray-700 cursor-pointer" />
