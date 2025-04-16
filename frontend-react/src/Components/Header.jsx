@@ -13,6 +13,7 @@ function Header() {
   const { cartItems, decreaseQuantity, removeFromCart } = useCart(); // pega ações
 
   const total = cartItems.reduce((sum, item) => sum + item.valor * item.quantidade, 0);
+  const userType = localStorage.getItem("userType");
 
   return (
     <>
@@ -27,16 +28,18 @@ function Header() {
 
   {/* Menu central */}
   <nav className="hidden md:flex gap-8 text-black font-medium absolute left-1/2 transform -translate-x-1/2">
-    <a href="#" className="hover:text-red-500 transition">Marmitas</a>
+    <a href="/home" className="hover:text-red-500 transition">Marmitas</a>
     <a href="#" className="hover:text-red-500 transition">Mais categorias</a>
     <a href="#" className="hover:text-red-500 transition">Objetivos</a>
     <a href="#" className="hover:text-red-500 transition">Sobre nós</a>
+    {userType == 1 && <a href="/cadastrar-marmita" className="hover:text-red-500 transition">Cadastar Marmita</a>}
   </nav>
 
         <div className="flex items-center gap-4">
-          <MagnifyingGlassIcon className="h-5 w-5 text-gray-700 cursor-pointer" />
-          <MapPinIcon className="h-5 w-5 text-gray-700 cursor-pointer" />
-          <UserIcon className="h-5 w-5 text-gray-700 cursor-pointer" />
+          <a href="#"><MagnifyingGlassIcon className="h-5 w-5 text-gray-700 cursor-pointer" /></a>
+          <a href="/endereco" alt="Endereço"><MapPinIcon className="h-5 w-5 text-gray-700 cursor-pointer" /></a>
+          <a href="#"> <UserIcon className="h-5 w-5 text-gray-700 cursor-pointer" /></a>
+        
           <button
             className="group flex items-center px-4 py-1.5 rounded-full 
               bg-red-600 text-white hover:bg-white hover:text-black 

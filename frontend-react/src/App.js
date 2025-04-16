@@ -4,7 +4,9 @@ import MainPage from './Pages/MainPage';
 import Login from './Pages/Login';
 import SignIn from './Pages/SignIn';
 import PrivateRoute from './Components/PrivateRoute';
-import CadastrarMarmita from './Pages/CadastrarMarmita'; // ajuste no path
+import AdminRoute from './Components/AdminRoute';
+import CadastrarMarmita from './Pages/CadastrarMarmita';
+import Endereco from './Pages/Endereco';
 
 function App() {
   return (
@@ -15,8 +17,21 @@ function App() {
         <Route path="/cadastro" element={<SignIn />} />
         
         {/* Página protegida do colaborador */}
-        <Route path="/cadastrar-marmita" element={<CadastrarMarmita />} />
+        <Route path="/cadastrar-marmita" element={
+          <AdminRoute>
+            <Layout />
+          </AdminRoute>
+        }>
+          <Route index element={<CadastrarMarmita />} />
+        </Route>
 
+        <Route path="/endereco" element={
+          <PrivateRoute>
+            <Layout />
+          </PrivateRoute>
+        }>
+          <Route index element={<Endereco />} />
+        </Route>
 
         {/* Página protegida do cliente com layout e cards */}
         <Route path="/home" element={

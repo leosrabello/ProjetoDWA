@@ -33,6 +33,7 @@ function Login() {
       if (user) {
         localStorage.setItem("userEmail", user.email);
         localStorage.setItem("logado", true);
+        localStorage.setItem("userType", user.tipo);
 
         if (formData.email === "leozitos@gmail.com" && formData.senha === "leozitos123") {
           navigate('/cadastrar-marmita');
@@ -63,7 +64,7 @@ function Login() {
         <Carousel />
       </div>
 
-      <div className="min-h-screen w-1/3 flex justify-end items-center bg-white p-8 shadow-lg">
+      <div className="min-h-screen w-1/3 flex justify-center items-center bg-white p-8 shadow-lg">
         <form
           className="w-full max-w-sm flex flex-col"
           onSubmit={handleSubmit}

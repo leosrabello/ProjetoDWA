@@ -49,6 +49,12 @@ function SignIn() {
     try {
       const response = await axios.post("http://localhost:5294/api/cadastrar-usuario", usuarioData);
       console.log("Usuário cadastrado com sucesso:", response.data);
+      const user = response.data;
+
+      localStorage.setItem("userEmail", user.email);
+      localStorage.setItem("logado", true);
+      localStorage.setItem("userType", user.tipo);
+
       setFormData({
         nome: '',
         email: '',
@@ -72,7 +78,7 @@ function SignIn() {
         <Carousel />
       </div>
 
-      <div className="min-h-screen w-1/3 flex justify-end items-center bg-white p-8 shadow-lg">
+      <div className="min-h-screen w-1/3 flex justify-center items-center bg-white p-8 shadow-lg">
         <form
           className="w-full max-w-sm flex flex-col"
           onSubmit={handleSubmit}
