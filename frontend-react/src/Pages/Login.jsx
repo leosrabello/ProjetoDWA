@@ -34,6 +34,7 @@ function Login() {
         localStorage.setItem("userEmail", user.email);
         localStorage.setItem("logado", true);
         localStorage.setItem("userType", user.tipo);
+        localStorage.setItem("user", user.id);
 
         if (formData.email === "leozitos@gmail.com" && formData.senha === "leozitos123") {
           navigate('/cadastrar-marmita');

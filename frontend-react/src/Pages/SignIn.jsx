@@ -11,8 +11,6 @@ function SignIn() {
   const { showError, errorMsg, clearError } = useError();
 
   const navigate = useNavigate();
-  // const [rua, setRua] = useState("");
-
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -54,6 +52,7 @@ function SignIn() {
       localStorage.setItem("userEmail", user.email);
       localStorage.setItem("logado", true);
       localStorage.setItem("userType", user.tipo);
+      localStorage.setItem("user", user.Id);
 
       setFormData({
         nome: '',
@@ -68,7 +67,6 @@ function SignIn() {
     }
   };
   
-
   return (
     <div className='min-h-screen flex justify-end bg-orange-500'>
 
@@ -102,33 +100,6 @@ function SignIn() {
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           />
-
-          {/* <InputField
-            label="CEP:"
-            id="cep"
-            type="cep"
-            placeholder="Digite seu CEP apenas números!"
-            setRua={setRua}
-          />
-
-        <div className="flex flex-col mb-4">
-          <label htmlFor="rua" className="mb-1 font-medium text-gray-700">Rua:</label>
-          <input
-            id="rua"
-            type="text"
-            value={rua}
-            readOnly // impede digitação manual
-            className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
-            placeholder='Rua teste..'
-          />
-        </div>
-
-          <InputField
-            label="Complemento:"
-            id="complemento"
-            type="text"
-            placeholder="Apartamento 1.."
-          /> */}
 
           <InputField
             label="Senha:"

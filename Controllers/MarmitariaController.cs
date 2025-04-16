@@ -209,6 +209,31 @@ namespace marmitariaLeozitos.Controllers
             return StatusCode(201, usuario);
         }
 
+        [HttpPut("alterar-usuario/{id}")]
+        public async Task<IActionResult> UpdateUsuario(int id, Logradouro logradouro)
+        {
+
+            if (logradouro == null)
+            {
+                return BadRequest("Dados inválidos.");
+            }
+
+            var usuario = await _appDbContext.Usuario.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound("Usuario não encontrado.");
+            }
+            _appDbContext.Logradouro.Add(logradouro);
+            await _appDbContext.SaveChangesAsync();
+
+            usuario.LogradouroId = logradouro.Id;
+
+            _appDbContext.Usuario.Update(usuario);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok("Logradouro salvo e atribuido a o usuário com sucesso!");
+        }
+
         [HttpPost("validar-login")]
         public async Task<IActionResult> CadastrarUsuario([FromBody] JsonElement dados)
         {
@@ -222,7 +247,7 @@ namespace marmitariaLeozitos.Controllers
 
             var usuarios = await _appDbContext.Usuario.ToListAsync();
 
-            foreach (var user in usuarios)
+        foreach (var user in usuarios)
             {
                 if(user.senha == senha && user.email == email)
                 {
@@ -230,14 +255,29 @@ namespace marmitariaLeozitos.Controllers
                         success = true,
                         message = "Usuário logado com sucesso!",
                         email = user.email,
-                        tipo = user.tipo 
+                        tipo = user.tipo, 
+                        id = user.Id
                     });
                 }
             }
 
             return BadRequest("E-mail ou senha incorretos. Tente novamente.");
         }
+        //USUARIO - FIM
+        //LOGRADOURO
+        [HttpGet("buscar-logradouro/{id}")]
+        public async Task<IActionResult> BuscarLogradouro(int id)
+        {
+            Console.WriteLine($"[DEBUG] ID recebido na rota: {id}");
+            var usuario = await _appDbContext.Usuario.FirstOrDefaultAsync(u => u.Id == id);
+            if(usuario == null)
+            {
+                return BadRequest("Usuário não possui logradouro!" + id);
+            }
 
+            return Ok(usuario);
+        }
 
+        // //LOGRADOURO - FIM
     }
 }
