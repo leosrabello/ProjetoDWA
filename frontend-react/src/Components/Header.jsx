@@ -4,42 +4,49 @@ import {
   MagnifyingGlassIcon,
   MapPinIcon,
   UserIcon,
-  XMarkIcon
+  XMarkIcon,
+  Bars3Icon
 } from '@heroicons/react/24/outline';
-import { useCart } from '../Context/CartContext'; // importa o contexto
+import { useCart } from '../Context/CartContext';
 
 function Header() {
   const [isCartOpen, setCartOpen] = useState(false);
-  const { cartItems, decreaseQuantity, removeFromCart } = useCart(); // pega ações
-
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { cartItems, decreaseQuantity, removeFromCart } = useCart();
   const total = cartItems.reduce((sum, item) => sum + item.valor * item.quantidade, 0);
   const userType = localStorage.getItem("userType");
 
   return (
     <>
       <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-md py-4 px-6 flex justify-between items-center font-sans">
+        {/* Logo */}
         <div className="flex items-center gap-3">
-          <img
-            src="/leozitos marmitaria.png"
-            alt="Logo"
-            className="h-16 w-auto object-contain"
-          />
+          <img src="/leozitos marmitaria.png" alt="Logo" className="h-16 w-auto object-contain" />
         </div>
 
-  {/* Menu central */}
-  <nav className="hidden md:flex gap-8 text-black font-medium absolute left-1/2 transform -translate-x-1/2">
-    <a href="/home" className="hover:text-red-500 transition">Marmitas</a>
-    <a href="#" className="hover:text-red-500 transition">Mais categorias</a>
-    <a href="#" className="hover:text-red-500 transition">Objetivos</a>
-    <a href="#" className="hover:text-red-500 transition">Sobre nós</a>
-    {userType == 1 && <a href="/cadastrar-marmita" className="hover:text-red-500 transition">Cadastar Marmita</a>}
-  </nav>
+        {/* Botão menu mobile */}
+        <button
+          className="md:hidden"
+          onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <Bars3Icon className="h-6 w-6 text-gray-700" />
+        </button>
 
+        {/* Menu desktop */}
+        <nav className="hidden md:flex gap-8 text-black font-medium absolute left-1/2 transform -translate-x-1/2">
+          <a href="/home" className="hover:text-red-500 transition">Marmitas</a>
+          <a href="#" className="hover:text-red-500 transition">Mais categorias</a>
+          <a href="#" className="hover:text-red-500 transition">Objetivos</a>
+          <a href="#" className="hover:text-red-500 transition">Sobre nós</a>
+          {userType == 1 && <a href="/cadastrar-marmita" className="hover:text-red-500 transition">Cadastrar Marmita</a>}
+        </nav>
+
+        {/* Ícones */}
         <div className="flex items-center gap-4">
           <a href="#"><MagnifyingGlassIcon className="h-5 w-5 text-gray-700 cursor-pointer" /></a>
-          <a href="/endereco" alt="Endereço"><MapPinIcon className="h-5 w-5 text-gray-700 cursor-pointer" /></a>
-          <a href="#"> <UserIcon className="h-5 w-5 text-gray-700 cursor-pointer" /></a>
-        
+          <a href="/endereco"><MapPinIcon className="h-5 w-5 text-gray-700 cursor-pointer" /></a>
+          <a href="#"><UserIcon className="h-5 w-5 text-gray-700 cursor-pointer" /></a>
+
           <button
             className="group flex items-center px-4 py-1.5 rounded-full 
               bg-red-600 text-white hover:bg-white hover:text-black 
@@ -51,6 +58,17 @@ function Header() {
           </button>
         </div>
       </header>
+
+      {/* Menu mobile dropdown */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed top-20 left-0 w-full bg-white shadow-md z-40 py-4 px-6 space-y-4 text-black font-medium">
+          <a href="/home" className="block hover:text-red-500 transition">Marmitas</a>
+          <a href="#" className="block hover:text-red-500 transition">Mais categorias</a>
+          <a href="#" className="block hover:text-red-500 transition">Objetivos</a>
+          <a href="#" className="block hover:text-red-500 transition">Sobre nós</a>
+          {userType == 1 && <a href="/cadastrar-marmita" className="block hover:text-red-500 transition">Cadastrar Marmita</a>}
+        </div>
+      )}
 
       {/* Painel lateral do carrinho */}
       <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}>
@@ -94,7 +112,6 @@ function Header() {
                 ))}
               </ul>
 
-              {/* Total */}
               <div className="mt-6 border-t pt-4 text-right">
                 <p className="text-lg font-bold">Total: R$ {total.toFixed(2)}</p>
               </div>
