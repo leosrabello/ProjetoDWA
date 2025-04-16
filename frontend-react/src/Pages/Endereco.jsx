@@ -12,26 +12,27 @@ function Endereco() {
   const id = localStorage.getItem("user");
   const { showError, errorMsg, clearError } = useError();
   const { showMessage, message, clearMessage } = useMessage();
-  const [dadosLogradouro, setDadosLogradouro] = useState([]);
-  const [rua, setRua] = useState("");
   const [formData, setFormData] = useState(
     {
-      cep: dadosLogradouro.cep ?? '',
-      rua: dadosLogradouro.rua ?? '',
-      numero: dadosLogradouro.numero ?? '',
-      complemento: dadosLogradouro.complemento ?? ''
+      cep: '',
+      rua: '',
+      numero: '',
+      complemento: ''
     }
   );
-
-  useEffect(() => {
-    setFormData(prev => ({ ...prev, rua }));
-  }, [rua]);
 
   useEffect(() => {
     const buscarLogradouro = async () => {
       try {
         const response = await axios.get(`http://localhost:5294/api/buscar-logradouro/${id}`);
-        setDadosLogradouro(response.data);
+        const dados = response.data;
+        setFormData({
+          cep: dados.cep,
+          rua: dados.rua,
+          numero: dados.numero,
+          complemento: dados.complemento
+        });
+
       } catch (error) {
         console.error("Erro ao buscar logradouro", error);
         showError("Erro ao buscar logradouro: " + (error.response?.data || error.message));
@@ -76,7 +77,7 @@ function Endereco() {
           id="cep"
           type="cep"
           placeholder="Digite seu CEP apenas números!"
-          setRua={setRua}
+          setFormData={setFormData}
           value={formData.cep}
           onChange={(e) => setFormData({ ...formData, cep: e.target.value })}
         />
@@ -86,7 +87,7 @@ function Endereco() {
           <input
             id="rua"
             type="text"
-            value={rua}
+            value={formData.rua}
             className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder='Rua teste..'
             onChange={(e) => setFormData({ ...formData, rua: e.target.value })}  
@@ -98,6 +99,7 @@ function Endereco() {
             id="numero"
             type="text"
             placeholder="112"
+            value = {formData.numero}
             onChange={(e) => setFormData({ ...formData, numero: e.target.value })}  
           />
 
@@ -106,6 +108,7 @@ function Endereco() {
             id="complemento"
             type="text"
             placeholder="Apartamento 1.."
+            value = {formData.complemento}
             onChange={(e) => setFormData({ ...formData, complemento: e.target.value })}  
           />
 

@@ -209,6 +209,7 @@ namespace marmitariaLeozitos.Controllers
             return StatusCode(201, usuario);
         }
 
+        //Essa rota é utilizada pra atribuir um logradouro a um usuário já que o usuário recebe null de padrão
         [HttpPut("alterar-usuario/{id}")]
         public async Task<IActionResult> UpdateUsuario(int id, Logradouro logradouro)
         {
@@ -274,8 +275,9 @@ namespace marmitariaLeozitos.Controllers
             {
                 return BadRequest("Usuário não possui logradouro!" + id);
             }
-
-            return Ok(usuario);
+            
+            var logradouro = _appDbContext.Logradouro.FirstOrDefault(l => l.Id == usuario.LogradouroId);
+            return Ok(logradouro);
         }
 
         // //LOGRADOURO - FIM

@@ -1,28 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 
-function InputFieldCep({ label, id, type = "text", placeholder, setRua, value, onChange }) {
+function InputFieldCep({ label, id, type = "text", placeholder, setFormData, value, onChange }) {
+  
   const alteracoesCep = async (e) => {
     let val = e.target.value.replace(/\D/g, "");
     if (val.length > 8) val = val.slice(0, 8);
+
+    // Formata o CEP com hífen
+    const formattedCep = val.length >= 6 ? val.slice(0, 5) + '-' + val.slice(5) : val;
+
+    onChange({ target: { value: formattedCep } });
 
     if (val.length === 8) {
       try {
         const response = await axios.get(`https://viacep.com.br/ws/${val}/json/`);
         const data = response.data;
+
         if (!data.erro) {
-          setRua(data.logradouro);
+          setFormData(prev => ({
+            ...prev,
+            rua: data.logradouro,
+            cep: formattedCep,
+            complemento: data.complemento || '',
+          }));
         } else {
-          setRua("");
+          console.warn("CEP não encontrado.");
         }
       } catch (err) {
         console.error("Erro ao buscar CEP:", err);
       }
     }
-
-    // Formata o CEP com hífen
-    const formattedCep = val.length >= 6 ? val.slice(0, 5) + '-' + val.slice(5) : val;
-    onChange({ target: { value: formattedCep } });
   };
 
   return (
