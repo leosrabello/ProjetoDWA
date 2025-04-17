@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function ErrorMessage({ msg, onClose }) {
   const [isExiting, setIsExiting] = useState(false);
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
     const timer = async () => {
@@ -11,25 +11,26 @@ function ErrorMessage({ msg, onClose }) {
       await sleep(300);
       onClose();
     };
-
     timer();
   }, [onClose]);
 
-
-  const isClosing = async() => {
+  const isClosing = async () => {
     setIsExiting(true);
-    await(new Promise(resolve => setTimeout(resolve, 300)));
+    await sleep(300);
     onClose();
   };
 
   return (
-    <div className={isExiting ? "bg-red-500/80 fixed top-4 right-4 text-white p-4 rounded shadow z-50 animate-slide-up" : "bg-red-500/80 fixed top-4 right-4 text-white p-4 rounded shadow z-50 animate-slide-down"}
-     >
+    <div
+      className={`fixed top-4 right-4 z-[9999] bg-red-500 text-white px-6 py-3 rounded shadow transition-all ${
+        isExiting ? "animate-slide-up" : "animate-slide-down"
+      }`}
+    >
       <div className="flex justify-between items-center gap-4">
-        <p>{msg}</p>
+        <p className="font-semibold">{msg}</p>
         <button
-          onClick={() => isClosing()}
-          className="font-bold hover:text-black"
+          onClick={isClosing}
+          className="font-bold hover:text-black text-white"
         >
           X
         </button>

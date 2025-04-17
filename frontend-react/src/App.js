@@ -8,6 +8,7 @@ import AdminRoute from './Components/AdminRoute';
 import CadastrarMarmita from './Pages/CadastrarMarmita';
 import Endereco from './Pages/Endereco';
 import About from './Pages/About';
+import PerfilUsuario from './Pages/PerfilUsuario'; // ✅
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route index element={<CadastrarMarmita />} />
         </Route>
 
+        {/* Página protegida do cliente - endereço */}
         <Route path="/endereco" element={
           <PrivateRoute>
             <Layout />
@@ -39,7 +41,7 @@ function App() {
           <Route index element={<Endereco />} />
         </Route>
 
-        {/* Página protegida do cliente com layout e cards */}
+        {/* Página protegida do cliente - home */}
         <Route path="/home" element={
           <PrivateRoute>
             <Layout />
@@ -47,9 +49,19 @@ function App() {
         }>
           <Route index element={<MainPage />} />
         </Route>
+
+        {/* ✅ Página protegida do cliente - perfil */}
+        <Route path="/perfil" element={
+          <PrivateRoute>
+            <Layout />
+          </PrivateRoute>
+        }>
+          <Route index element={<PerfilUsuario />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
+

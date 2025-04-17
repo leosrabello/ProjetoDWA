@@ -1,9 +1,7 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
 
-// 1. Criar o contexto
 const ErrorContext = createContext();
 
-// 2. Criar o provider
 export function ErrorProvider({ children }) {
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -22,7 +20,6 @@ export function ErrorProvider({ children }) {
   );
 }
 
-// 3. Criar um hook para facilitar
 export function useError() {
   return useContext(ErrorContext);
 }
