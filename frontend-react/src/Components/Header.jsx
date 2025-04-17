@@ -9,9 +9,10 @@ import {
 } from '@heroicons/react/24/outline';
 import { useCart } from '../Context/CartContext';
 import { useMessage } from '../Context/MessageContext';
+import SearchBar from './SearchBar';
 
 
-function Header() {
+function Header({ onSearch }) {
   const [isCartOpen, setCartOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { cartItems, decreaseQuantity, removeFromCart, clearCart } = useCart();
@@ -27,16 +28,16 @@ function Header() {
           <img src="/leozitos marmitaria.png" alt="Logo" className="h-16 w-auto object-contain" />
         </div>
 
-        {/* Botão menu mobile */}
+        {/* Botão mobile */}
         <button
-          className="md:hidden"
+          className="cs:hidden"
           onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
         >
           <Bars3Icon className="h-6 w-6 text-gray-700" />
         </button>
 
         {/* Menu desktop */}
-        <nav className="hidden md:flex gap-8 text-black font-medium absolute left-1/2 transform -translate-x-1/2">
+        <nav className="hidden cs:flex gap-8 text-black font-medium absolute left-1/2 transform -translate-x-1/2">
           <a href="/home" className="hover:text-red-500 transition">Marmitas</a>
           <a href="#" className="hover:text-red-500 transition">Objetivos</a>
           <a href="/About" className="hover:text-red-500 transition">Sobre nós</a>
@@ -45,7 +46,7 @@ function Header() {
 
         {/* Ícones */}
         <div className="flex items-center gap-4">
-          <a href="#"><MagnifyingGlassIcon className="h-5 w-5 text-gray-700 cursor-pointer" /></a>
+          <SearchBar onSearch={onSearch} />
           <a href="/endereco"><MapPinIcon className="h-5 w-5 text-gray-700 cursor-pointer" /></a>
           <a href="#"><UserIcon className="h-5 w-5 text-gray-700 cursor-pointer" /></a>
 
@@ -63,11 +64,10 @@ function Header() {
 
       {/* Menu mobile dropdown */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed top-20 left-0 w-full bg-white shadow-md z-40 py-4 px-6 space-y-4 text-black font-medium">
+        <div className="cs:hidden fixed top-20 left-0 w-full bg-white shadow-md z-40 py-4 px-6 space-y-4 text-black font-medium">
           <a href="/home" className="block hover:text-red-500 transition">Marmitas</a>
-          <a href="#" className="block hover:text-red-500 transition">Mais categorias</a>
           <a href="#" className="block hover:text-red-500 transition">Objetivos</a>
-          <a href="#" className="block hover:text-red-500 transition">Sobre nós</a>
+          <a href="/About" className="block hover:text-red-500 transition">Sobre nós</a>
           {userType == 1 && <a href="/cadastrar-marmita" className="block hover:text-red-500 transition">Cadastrar Marmita</a>}
         </div>
       )}

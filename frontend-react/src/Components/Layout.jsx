@@ -3,22 +3,21 @@ import Footer from './Footer';
 import { Outlet } from 'react-router-dom';
 import { useMessage } from '../Context/MessageContext';
 import Message from './Message';
+import { useState } from 'react';
 
 function Layout() {
   const { message, clearMessage } = useMessage();
-  console.log("Mensagem atual no Layout:", message);
+  const [searchTerm, setSearchTerm] = useState(""); 
 
   return (
     <div className="min-h-screen flex flex-col relative">
-      {/* Toast de mensagem */}
       {message && <Message msg={message} onClose={clearMessage} />}
-
-
-
-      <Header />
+      
+      <Header onSearch={setSearchTerm} /> 
       <main className="flex-1 p-4">
-        <Outlet />
+        <Outlet context={{ searchTerm }} /> 
       </main>
+      
       <Footer />
     </div>
   );
