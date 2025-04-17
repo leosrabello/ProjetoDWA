@@ -2,11 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import MarmitaItemCard from "./MarmitaItemCard.jsx";
 
-// Imagens
-import frangoGrelhado from '../img/frango-grelhado.jpeg';
-import fileMignon from '../img/file-mignon.jpeg';
-import frangoMilanesa from '../img/frango-milanesa.jpg';
-
 function MarmitaCard() {
   const [marmitas, setMarmitas] = useState([]);
 
@@ -24,12 +19,6 @@ function MarmitaCard() {
 
     buscarMarmitas();
   }, []);
-
-  const imagens = {
-    "Frango Grelhado": frangoGrelhado,
-    "Filé Mignon": fileMignon,
-    "Frango à Milanesa": frangoMilanesa,
-  };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">

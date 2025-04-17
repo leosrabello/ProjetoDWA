@@ -36,16 +36,13 @@ function Login() {
         localStorage.setItem("userType", user.tipo);
         localStorage.setItem("user", user.id);
 
-        if (formData.email === "leozitos@gmail.com" && formData.senha === "leozitos123") {
+        setFormData({ email: '', senha: '' });
+
+        if (user.tipo === 1) {
           navigate('/cadastrar-marmita');
         } else {
           navigate('/home');
         }
-
-        setFormData({
-          email: '',
-          senha: ''
-        });
       }
     } catch (error) {
       showError("Erro ao tentar efetuar login: " + (error.response?.data || error.message));
@@ -66,16 +63,9 @@ function Login() {
       </div>
 
       <div className="min-h-screen w-1/3 flex justify-center items-center bg-white p-8 shadow-lg">
-        <form
-          className="w-full max-w-sm flex flex-col"
-          onSubmit={handleSubmit}
-        >
+        <form className="w-full max-w-sm flex flex-col" onSubmit={handleSubmit}>
           <div className="flex flex-col items-center mb-4">
-            <img
-              src="/leozitos marmitaria.png"
-              alt="Logo"
-              className="h-50 w-auto object-contain"
-            />
+            <img src="/leozitos marmitaria.png" alt="Logo" className="h-50 w-auto object-contain" />
             <h3 className='text-red-500 font-bold mb-4'>Peça já sua marmita!</h3>
           </div>
 
@@ -100,16 +90,10 @@ function Login() {
           />
 
           <div className="flex flex-col gap-2 mt-10">
-            <button
-              type="submit"
-              className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition"
-            >
+            <button type="submit" className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition">
               Entrar
             </button>
-            <a
-              href="/cadastro"
-              className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition text-center"
-            >
+            <a href="/cadastro" className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition text-center">
               Cadastrar
             </a>
           </div>
