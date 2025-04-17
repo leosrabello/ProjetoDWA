@@ -17,8 +17,9 @@ function Layout() {
 
       <Header />
       <main className="flex-1 p-4">
-        <Outlet />
+        <Outlet context={{ searchTerm }} /> 
       </main>
+      
       <Footer />
     </div>
   );
