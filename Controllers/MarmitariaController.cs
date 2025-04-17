@@ -160,6 +160,7 @@ namespace marmitariaLeozitos.Controllers
             return Ok(pedidos);
         }
 
+
         [HttpPost("criar-pedido")]
         public async Task<IActionResult> CriarPedido(PedidoDTO dto) 
         {
@@ -209,6 +210,30 @@ namespace marmitariaLeozitos.Controllers
             return StatusCode(201, usuario);
         }
 
+[HttpPut("atualizar-usuario/{id}")]
+public async Task<IActionResult> AtualizarUsuario(int id, [FromBody] Usuario dadosAtualizados)
+{
+    var usuario = await _appDbContext.Usuario.FindAsync(id);
+    if (usuario == null)
+    {
+        return NotFound("Usuário não encontrado.");
+    }
+
+    // Atualiza os campos permitidos
+    usuario.nome = dadosAtualizados.nome;
+    usuario.email = dadosAtualizados.email;
+
+    // Só atualiza a senha se ela foi enviada
+    if (!string.IsNullOrEmpty(dadosAtualizados.senha))
+    {
+        usuario.senha = dadosAtualizados.senha;
+    }
+
+    _appDbContext.Usuario.Update(usuario);
+    await _appDbContext.SaveChangesAsync();
+
+    return Ok("Usuário atualizado com sucesso!");
+}
         //Essa rota é utilizada pra atribuir um logradouro a um usuário já que o usuário recebe null de padrão
         [HttpPut("alterar-usuario/{id}")]
         public async Task<IActionResult> UpdateUsuario(int id, Logradouro logradouro)
@@ -281,5 +306,20 @@ namespace marmitariaLeozitos.Controllers
         }
 
         // //LOGRADOURO - FIM
+        [HttpGet("buscar-usuario/{id}")]
+public async Task<IActionResult> BuscarUsuarioPorId(int id)
+{
+    var usuario = await _appDbContext.Usuario.FindAsync(id);
+    if (usuario == null)
+    {
+        return NotFound("Usuário não encontrado.");
+    }
+
+    return Ok(new {
+        nome = usuario.nome,
+        email = usuario.email
+    });
+}
+
     }
 }
