@@ -10,14 +10,11 @@ export function CartProvider({ children }) {
   const addToCart = (marmita, quantidade) => {
     setCartItems((prev) => {
       const index = prev.findIndex(item => item.id === marmita.id);
-
       if (index !== -1) {
-        // Já existe no carrinho: somar quantidade
         const newCart = [...prev];
         newCart[index].quantidade += quantidade;
         return newCart;
       } else {
-        // Novo item
         return [...prev, { ...marmita, quantidade }];
       }
     });
@@ -26,7 +23,7 @@ export function CartProvider({ children }) {
   const removeFromCart = (id) => {
     setCartItems((prev) => prev.filter(item => item.id !== id));
   };
-  
+
   const decreaseQuantity = (id) => {
     setCartItems((prev) =>
       prev.map(item =>
@@ -37,8 +34,14 @@ export function CartProvider({ children }) {
     );
   };
 
+  // ✅ ADICIONE ESTA FUNÇÃO AQUI (caso esteja faltando)
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  // ✅ ELA ESTÁ INCLUÍDA CORRETAMENTE AQUI:
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, decreaseQuantity }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, decreaseQuantity, clearCart }}>
       {children}
     </CartContext.Provider>
   );

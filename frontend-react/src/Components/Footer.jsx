@@ -19,7 +19,7 @@ function Footer() {
 
         {/* Links */}
         <ul className="flex gap-6 text-sm">
-          <li><a href="#" className="hover:text-red-500 transition">Sobre</a></li>
+          <li><a href="/About" className="hover:text-red-500 transition">Sobre</a></li>
           <li><a href="#" className="hover:text-red-500 transition">Contato</a></li>
           <li><a href="#" className="hover:text-red-500 transition">Ajuda</a></li>
         </ul>

@@ -7,6 +7,7 @@ import PrivateRoute from './Components/PrivateRoute';
 import AdminRoute from './Components/AdminRoute';
 import CadastrarMarmita from './Pages/CadastrarMarmita';
 import Endereco from './Pages/Endereco';
+import About from './Pages/About';
 
 function App() {
   return (
@@ -15,7 +16,12 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<SignIn />} />
-        
+
+        {/* Página pública "Sobre" com layout */}
+        <Route path="/about" element={<Layout />}>
+          <Route index element={<About />} />
+        </Route>
+
         {/* Página protegida do colaborador */}
         <Route path="/cadastrar-marmita" element={
           <AdminRoute>
