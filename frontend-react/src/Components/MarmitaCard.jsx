@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import MarmitaItemCard from "./MarmitaItemCard.jsx";
+import { Navigate } from "react-router-dom";
 
 function MarmitaCard({ searchTerm }) {
   const [marmitas, setMarmitas] = useState([]);
@@ -12,6 +13,7 @@ function MarmitaCard({ searchTerm }) {
         let lista = response.data;
 
         if (searchTerm?.trim()) {
+          
           lista = lista.filter((m) =>
             m.descricao.toLowerCase().includes(searchTerm.toLowerCase())
           );

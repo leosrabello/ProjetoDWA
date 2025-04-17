@@ -68,7 +68,7 @@ function PerfilUsuario() {
   return (
     <div className="flex justify-center mt-10">
       <form onSubmit={handleSubmit} className="bg-white p-8 shadow-md rounded-xl w-full max-w-xl">
-        <h1 className="text-5xl font-bold mb-6 text-center pt-16 text-gray-800">Meu Perfil</h1>
+        <h1 className="text-5xl font-bold mb-6 text-center pt-16 text-red-500">Meu Perfil</h1>
 
         <label className="block text-sm font-medium mb-1">Nome</label>
         <input
@@ -95,7 +95,7 @@ function PerfilUsuario() {
             onChange={e => setSenha(e.target.value)}
           />
           <button type="button" onClick={() => setVerSenha(!verSenha)} className="absolute right-2 top-2 text-sm">
-            {verSenha ? "🙈" : "👁️"}
+            {verSenha ? "👁️" : "🙈"}
           </button>
         </div>
 
@@ -108,7 +108,7 @@ function PerfilUsuario() {
             onChange={e => setConfirmarSenha(e.target.value)}
           />
           <button type="button" onClick={() => setVerConfirmar(!verConfirmar)} className="absolute right-2 top-2 text-sm">
-            {verConfirmar ? "🙈" : "👁️"}
+            {verConfirmar ? "👁️" : "🙈"}
           </button>
         </div>
 
