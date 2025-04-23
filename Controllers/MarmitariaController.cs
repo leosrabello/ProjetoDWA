@@ -187,6 +187,18 @@ namespace marmitariaLeozitos.Controllers
         //PEDIDO - END
 
         //USUARIO
+        [HttpGet("buscar-usuario/{id}")]
+        public async Task<IActionResult> BuscarUsuario(int id)
+        {
+            var usuario = await _appDbContext.Usuario.FindAsync(id);
+            if(usuario == null)
+            {
+                return BadRequest("Usuário inexistente!");
+            }
+
+            return Ok(usuario);
+        }
+
         [HttpPost("cadastrar-usuario")]
         public async Task<IActionResult> CadastrarUsuario(Usuario usuario)
         {
@@ -224,6 +236,20 @@ namespace marmitariaLeozitos.Controllers
             {
                 return NotFound("Usuario não encontrado.");
             }
+
+            if(usuario.LogradouroId != null)
+            {
+                var oldLogradouro = await _appDbContext.Logradouro.FindAsync(usuario.LogradouroId);
+
+                oldLogradouro.cep = logradouro.cep;
+                oldLogradouro.rua = logradouro.rua;
+                oldLogradouro.complemento = logradouro.complemento;
+                _appDbContext.Logradouro.Update(oldLogradouro);
+
+                await _appDbContext.SaveChangesAsync();
+                return Ok("Endereço alterado com sucesso!");
+            }
+
             _appDbContext.Logradouro.Add(logradouro);
             await _appDbContext.SaveChangesAsync();
 
@@ -233,6 +259,35 @@ namespace marmitariaLeozitos.Controllers
             await _appDbContext.SaveChangesAsync();
 
             return Ok("Logradouro salvo e atribuido a o usuário com sucesso!");
+        }
+
+        [HttpPut("atualizar-usuario/{id}")]
+        public async Task<IActionResult> AtualizarUsuario(int id, [FromBody] JsonElement dados)
+        {
+
+            string nome  = dados.GetProperty("nome").GetString();
+            string email = dados.GetProperty("email").GetString();
+            string senha = dados.GetProperty("senha").GetString();
+
+            if (nome == null || email == null || senha == null)
+            {
+                return NotFound("Dados inválidos.");
+            }
+
+            var usuarioLogado = await _appDbContext.Usuario.FindAsync(id);
+            if(usuarioLogado == null)
+            {
+                return BadRequest("Usuário não encontrado!");
+            }
+
+            usuarioLogado.nome  = nome;
+            usuarioLogado.email = email;
+            usuarioLogado.senha = senha;
+
+            _appDbContext.Usuario.Update(usuarioLogado);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok("Dados do usuário alterados com sucesso!");
         }
 
         [HttpPost("validar-login")]

@@ -1,62 +1,73 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useMessage } from '../Context/MessageContext';
+import React, { useState, useEffect } from 'react'
+import ErrorMessage from '../Components/ErrorMessage';
+import Message from '../Components/Message';
 import { useError } from '../Context/ErrorContext';
+import { useMessage } from '../Context/MessageContext';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 
 function PerfilUsuario() {
   const userId = localStorage.getItem("user");
   const navigate = useNavigate();
-  const { showMessage } = useMessage();
-  const { showError } = useError();
-
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const { showError, errorMsg, clearError } = useError();
+  const { showMessage, message, clearMessage } = useMessage();
   const [verSenha, setVerSenha] = useState(false);
   const [verConfirmar, setVerConfirmar] = useState(false);
+  const [formData, setFormData] = useState([
+    {
+      nome: '',
+      email: '',
+      senha: '',
+      confirmarSenha: ''
+    }
+  ]);
 
   useEffect(() => {
+
     if (!userId) {
       showError("Usuário não autenticado.");
-      return;
+      navigate("/login");
     }
 
-    axios.get(`http://localhost:5294/api/buscar-usuario/${userId}`)
-      .then(res => {
-        setNome(res.data.nome);
-        setEmail(res.data.email);
-      })
-      .catch(() => showError("Erro ao carregar dados do usuário."));
-  }, [userId, showError]);
+    const buscarDadosUsuario = async () => {
+
+      try {
+        const response = await axios.get(`http://localhost:5294/api/buscar-usuario/${userId}`)
+        const dados = response.data;
+
+        setFormData({...formData, nome: dados.nome,
+                                  email: dados.email
+      });
+
+      } catch(e) {
+        showError("Erro ao buscar dados do usuario: " + (e.response?.data || e.message));
+      }
+    };
+
+      buscarDadosUsuario();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!nome || !email) {
+    if (!formData.nome || !formData.email) {
       showError("Nome e email são obrigatórios.");
       return;
     }
 
-    if (senha && senha !== confirmarSenha) {
+    if (formData.senha && formData.senha !== formData.confirmarSenha) {
       showError("As senhas não coincidem.");
       return;
     }
 
-    const payload = {
-      nome,
-      email,
-      senha: senha.trim() === "" ? null : senha
-    };
-
     try {
-      const res = await axios.put(`http://localhost:5294/api/atualizar-usuario/${userId}`, payload);
-      showMessage("Perfil atualizado com sucesso!");
-      setSenha("");
-      setConfirmarSenha("");
-    } catch {
-      showError("Erro ao salvar os dados.");
+      const res = await axios.put(`http://localhost:5294/api/atualizar-usuario/${userId}`, formData);
+      showMessage(res.data);
+      setFormData({...formData, senha: "", confirmarSenha: ""});
+      
+    } catch(error) {
+      showError("Erro ao alterar os dados do usuario: " + (error.response?.data || error.message));
     }
   };
 
@@ -67,6 +78,13 @@ function PerfilUsuario() {
 
   return (
     <div className="flex justify-center mt-10">
+        {errorMsg && (
+        <ErrorMessage msg={errorMsg} onClose={clearError} />
+        )}
+        {message && (
+          <Message msg={message} onClose={clearMessage} />
+        )}
+        
       <form onSubmit={handleSubmit} className="bg-white p-8 shadow-md rounded-xl w-full max-w-xl">
         <h1 className="text-5xl font-bold mb-6 text-center pt-16 text-red-500">Meu Perfil</h1>
 
@@ -74,16 +92,16 @@ function PerfilUsuario() {
         <input
           className="w-full border rounded px-4 py-2 mb-4"
           type="text"
-          value={nome}
-          onChange={e => setNome(e.target.value)}
+          value={formData.nome}
+          onChange={e => setFormData({...formData, nome: e.target.value})}
         />
 
         <label className="block text-sm font-medium mb-1">E-mail</label>
         <input
           className="w-full border rounded px-4 py-2 mb-4"
           type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={e => setFormData({...formData, email: e.target.value})}
         />
 
         <label className="block text-sm font-medium mb-1">Nova senha</label>
@@ -91,8 +109,8 @@ function PerfilUsuario() {
           <input
             className="w-full border rounded px-4 py-2"
             type={verSenha ? "text" : "password"}
-            value={senha}
-            onChange={e => setSenha(e.target.value)}
+            value={formData.senha}
+            onChange={e => setFormData({...formData, senha: e.target.value})}
           />
           <button type="button" onClick={() => setVerSenha(!verSenha)} className="absolute right-2 top-2 text-sm">
             {verSenha ? "👁️" : "🙈"}
@@ -104,8 +122,8 @@ function PerfilUsuario() {
           <input
             className="w-full border rounded px-4 py-2"
             type={verConfirmar ? "text" : "password"}
-            value={confirmarSenha}
-            onChange={e => setConfirmarSenha(e.target.value)}
+            value={formData.confirmarSenha}
+            onChange={e => setFormData({...formData, confirmarSenha: e.target.value})}
           />
           <button type="button" onClick={() => setVerConfirmar(!verConfirmar)} className="absolute right-2 top-2 text-sm">
             {verConfirmar ? "👁️" : "🙈"}

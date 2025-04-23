@@ -3,7 +3,7 @@ import { useCart } from "../Context/CartContext"; //  importante
 import Tilt from 'react-parallax-tilt';
 
 
-function MarmitaItemCard({ marmita}) {
+function MarmitaItemCard({ marmita, setItem, setQuant}) {
   const [quantidade, setQuantidade] = useState(1);
   const { addToCart } = useCart(); // pega a função do contexto
 
@@ -12,6 +12,8 @@ function MarmitaItemCard({ marmita}) {
 
   const handleAdd = () => {
     addToCart(marmita, quantidade); // adiciona ao carrinho
+    setItem(marmita.descricao)
+    setQuant(quantidade);
     setQuantidade(1); // opcional: reseta
   };
 
